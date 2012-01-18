@@ -26,7 +26,9 @@ from threading import Thread
 #=========================================
 #=========================================
 userDeviceName='BBskuba'
-emergenceyNumber='0867062100'
+MAX_PHONE = 2
+emergenceyNumber=['0898165264','0879987123']
+PhoneNum = 0
 speechFileName="helpMe.wav"
 #=========================================
 #=========================================
@@ -168,18 +170,19 @@ if dunPort != 0:
 #    dunPort=1
     print "Found Dial-Up Networking port = %d\n" % (dunPort)
  
+ 
     s = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
  
     conn = s.connect((userAddress, dunPort))
- 
-    # A semicolon ";" at the of the number dialed
+    
+	# A semicolon ";" at the of the number dialed
     # is necessary to make a voice call
     # with out the ";" this  command will try to
     # make a data call
  
     # Example to Dial a number using AT command
  
-    s.send('ATD%s;\r'%(emergenceyNumber)),
+    s.send('ATD%s;\r'%(emergenceyNumber[PhoneNum])),
     #print s.recv(1024),
     #playAudioThread=PlayAudioThread(speechFileName)
     #playAudioThread.start()
@@ -187,7 +190,7 @@ if dunPort != 0:
     #a = AudioFile(speechFileName)
 	#a.play_and_loop()
     os.system("banshee --play")
-    print "Start audio"
+    #print "Start audio"
 # This next section has to expect the correct number of returns
 # The first command "ATE1" gets a single "OK" response with a carrage return
 # The next commands expects 2 lines returned.
@@ -195,16 +198,26 @@ if dunPort != 0:
 # The correct send/expect sequence must be followedd or you will get
 # a hang or no response.
 
-    while True:
-		
+    while True:	
         msg=s.recv(1024).strip()
         print ">>> %s"%(msg)
         if msg=="NO CARRIER":
             #playAudioThread.close()
             s.close()
-            os.system("banshee --stop")
+            #os.system("banshee --stop")
             exit(0)
-        
+        if msg=="BUSY":
+	#		s = bluetooth.BluetoothSocket(bluetooth.RFCOMM)	
+			#s.close()
+			#s = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+			#conn = s.connect((userAddress, dunPort))
+			PhoneNum = PhoneNum+1
+			#s.send("ATH\r")
+			s.send('ATD%s;\r'%(emergenceyNumber[PhoneNum%MAX_PHONE])),
+        if msg=="ERROR":
+			s.send('ATD%s;\r'%(emergenceyNumber[PhoneNum%MAX_PHONE])),
+
+
     s.send("ATE1\r")
     print s.recv(1024),
  
