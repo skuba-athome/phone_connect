@@ -25,8 +25,8 @@ from threading import Thread
 
 #=========================================
 #=========================================
-userDeviceName='Nuok_op'
-emergenceyNumber='0869436906'
+userDeviceName='BBskuba'
+emergenceyNumber='0867062100'
 speechFileName="helpMe.wav"
 #=========================================
 #=========================================
@@ -125,7 +125,9 @@ count = 0
         
 
 #services = bluetooth.find_service(address=deviceAddress)
-userAddress='5C:17:D3:1D:DA:24'
+#userAddress='5C:17:D3:1D:DA:24'
+userAddress='70:D4:F2:7F:0B:6F'
+#deviceAddress='70:D4:F2:7F:0B:6F'
 services = bluetooth.find_service(address=userAddress)
 devicename = bluetooth.lookup_name(userAddress, timeout=10)
 showProfiles = None
@@ -147,7 +149,7 @@ dunPort = 0 # Not found yet
 #showProfiles = raw_input("Show Bluetooth Profiles supported? y|n")
 for svc in services:
      # Look for DUN port
-    if  svc["name"] == "Dial-up Networking":
+    if  svc["name"] == "Dialup Networking":
         dunPort = svc["port"]
 '''    if  showProfiles == "y":
         print "BT Profile: %s"    % svc["name"]
