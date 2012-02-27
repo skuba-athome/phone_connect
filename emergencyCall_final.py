@@ -94,42 +94,7 @@ foundDevices = bluetooth.discover_devices()
 userAddress = None
 #--------------------------------------------- 
 count = 0
-#while count == 0:
-'''for bdaddr in foundDevices:
-	tmpName=bluetooth.lookup_name( bdaddr )
-	deviceName.append(tmpName)
-	deviceAddress = bdaddr
-	if tmpName==userDeviceName:
-		userAddress=deviceAddress
-	print "%2d  %-16s Address: %s" % (count +1, deviceName[count], deviceAddress) 
-	count += 1  
-    #choice = raw_input("Choose Device or 0 to repeat scan")
-''' 
-    # Repeat scan to get more device names
-'''if (choice.isdigit() and int(choice) <= len(foundDevices)):
-        count = int(choice) 
-        if choice > "0": 
- 
-            print "\n-- Select device, 0 to repeat scan or q to quit --"
-            print ""
-            selected = deviceName[count -1]
-            deviceAddress = foundDevices[count -1]
- 
-            if deviceAddress is not None:
-                print ""
-            else:
-                print "Could not find a Bluetooth device"
- 
-    elif choice == 0: 
-        count = choice  # Repeat the while loop and device scan again
-    elif choice == "q" or choice == "Q":
-        exit(0)'''
-        
-
-#services = bluetooth.find_service(address=deviceAddress)
-#userAddress='5C:17:D3:1D:DA:24'
 userAddress='70:D4:F2:7F:0B:6F'
-#deviceAddress='70:D4:F2:7F:0B:6F'
 services = bluetooth.find_service(address=userAddress)
 devicename = bluetooth.lookup_name(userAddress, timeout=10)
 showProfiles = None
